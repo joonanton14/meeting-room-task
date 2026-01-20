@@ -22,8 +22,12 @@ export const reservationService = {
     }
 
     const now = new Date();
+    if (endDate.getTime() <= now.getTime()) {
+    throw badRequest("Varaus ei voi päättyä menneisyydessä.", { end: input.end, now: now.toISOString() });
+    }
+
     if (startDate.getTime() < now.getTime()) {
-      throw badRequest("Varaus ei voi alkaa menneisyydessä.", { start: input.start, now: now.toISOString() });
+    throw badRequest("Varaus ei voi alkaa menneisyydessä.", { start: input.start, now: now.toISOString() });
     }
 
     const existing = reservationRepo.listByRoom(input.roomId);
