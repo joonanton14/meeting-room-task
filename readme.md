@@ -44,9 +44,15 @@ Invoke-RestMethod -Method Post `
 4) Poista varaus id:llä (DELETE /reservations/:id):
 
 $rows = Invoke-RestMethod -Uri http://localhost:3000/rooms/A/reservations
-$rows
-$id = $rows[0].id
-Invoke-RestMethod -Method Delete -Uri "http://localhost:3000/reservations/$id"
+$first = $rows | Select-Object -First 1
+
+if ($null -eq $first) {
+  Write-Host "Ei varauksia huoneessa A."
+} else {
+  $id = $first.id
+  Invoke-RestMethod -Method Delete -Uri "http://localhost:3000/reservations/$id"
+  Write-Host "Poistettu varaus:" $id
+}
 
 5) Varmista että varaus on poistettu:
 
