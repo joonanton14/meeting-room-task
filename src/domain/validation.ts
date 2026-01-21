@@ -12,15 +12,15 @@ export function parseCreateReservationBody(body: unknown): CreateReservationInpu
   const title = b.title;
 
   if (typeof roomIdRaw !== "string" || roomIdRaw.trim() === "") {
-    throw badRequest("roomId on pakollinen string.");
+    throw badRequest("roomId on pakollinen ei-tyhjä merkkijono.");
   }
 
   if (typeof start !== "string" || start.trim() === "") {
-    throw badRequest("start on pakollinen ISO-8601 string.");
+    throw badRequest("start on pakollinen string.");
   }
-  
+
   if (typeof end !== "string" || end.trim() === "") {
-    throw badRequest("end on pakollinen ISO-8601 string.");
+    throw badRequest("end on pakollinen string.");
   }
 
   let cleanedTitle: string | undefined = undefined;
