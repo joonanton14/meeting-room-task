@@ -14,8 +14,14 @@ export function parseCreateReservationBody(body: unknown): CreateReservationInpu
   if (typeof roomIdRaw !== "string" || roomIdRaw.trim() === "") {
     throw badRequest("roomId on pakollinen string.");
   }
-  if (typeof start !== "string") throw badRequest("start on pakollinen string.");
-  if (typeof end !== "string") throw badRequest("end on pakollinen string.");
+
+  if (typeof start !== "string" || start.trim() === "") {
+    throw badRequest("start on pakollinen ISO-8601 string.");
+  }
+  
+  if (typeof end !== "string" || end.trim() === "") {
+    throw badRequest("end on pakollinen ISO-8601 string.");
+  }
 
   let cleanedTitle: string | undefined = undefined;
   if (title !== undefined) {
