@@ -47,7 +47,15 @@ try {
 Invoke-RestMethod -Method Delete -Uri "$BaseUrl/reservations/$($created.id)"
 Write-Host "Deleted reservation id:" $created.id
 
-# 5) Verify deletion
+# 5) Delete same id again (expect 404 not_found)
+try {
+  Invoke-RestMethod -Method Delete -Uri "$BaseUrl/reservations/$($created.id)"
+  throw "Expected second delete to fail with not_found, but it succeeded."
+} catch {
+  Write-Host "Second delete (not_found): OK (failed as expected)"
+}
+
+# 6) Verify deletion
 $list2 = Invoke-RestMethod -Uri "$BaseUrl/rooms/A/reservations"
 $count2 = @($list2).Count
 Write-Host "List count after delete:" $count2

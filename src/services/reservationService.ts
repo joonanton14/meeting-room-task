@@ -57,10 +57,12 @@ export const reservationService = {
   },
 
   cancel(id: string): void {
-    const found = reservationRepo.getById(id);
-    if (!found) throw notFound("Varausta ei löydy.", { id });
+  if (!id || id.trim() === "") throw badRequest("id puuttuu.");
 
-    reservationRepo.deleteById(id);
+  const found = reservationRepo.getById(id);
+  if (!found) throw notFound("Varausta ei löydy.", { id });
+
+  reservationRepo.deleteById(id);
   },
 
   listRoom(roomId: string): Reservation[] {
