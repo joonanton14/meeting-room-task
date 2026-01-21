@@ -2,14 +2,10 @@ import { conflict, notFound, badRequest } from "../domain/errors.js";
 import { reservationRepo } from "../repositories/reservationRepo.js";
 import type { CreateReservationInput, Reservation } from "../domain/types.js";
 import { toDateOrThrow } from "../domain/validation.js";
+import { overlaps } from "../domain/time.js";
 
 function id(): string {
   return `r_${Math.random().toString(16).slice(2)}_${Date.now().toString(16)}`;
-}
-
-// Overlap rule: [start, end) — end == other.start ei ole päällekkäinen
-function overlaps(aStart: Date, aEnd: Date, bStart: Date, bEnd: Date): boolean {
-  return aStart < bEnd && bStart < aEnd;
 }
 
 export const reservationService = {
