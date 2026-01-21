@@ -1,9 +1,14 @@
 import type { Reservation } from "../domain/types.js";
+import { conflict } from "../domain/errors.js";
 
 const store = new Map<string, Reservation>();
 
 export const reservationRepo = {
   insert(r: Reservation) {
+    // Estetään tahaton ylikirjoitus, jos id on jo olemassa
+    if (store.has(r.id)) {
+      throw conflict("Varaus id on jo olemassa.", { id: r.id });
+    }
     store.set(r.id, r);
   },
 
