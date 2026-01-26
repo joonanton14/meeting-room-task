@@ -24,4 +24,45 @@ Tee projektiin kansiorakenneja toteuta endpointit.
 
 **Miten hyödynsin sitä:**
 Rakensin sen pohjalta nykyisen projektin rungon ja sain endpointit toimimaan.
-Testasin käsin PowerShellillä: varauksen luonti, listaus, päällekkäisyyden esto ja poisto id:llä.
+
+## Prompt 2 (PowerShell testauskomennot)
+**Mitä pyysin:**
+Haluan ohjeet miten testaan API:a.
+
+**Mitä sain:**
+- PowerShell-esimerkit varauksen luontiin, listaukseen, päällekkäisyyden testaamiseen ja poistoon.
+- Vinkit miksi `Invoke-RestMethod` heittää virheen 4xx/5xx vastauksista ja miten bodyn näkee silti.
+
+**Miten hyödynsin sitä:**
+Sain testattua kaikki endpointit käsin PowerShellillä.
+Opin myös miksi 409/400 näkyy PowerShellissä “virheenä” vaikka se on odotettu vastaus.
+
+## Prompt 3 (Refaktoroinnit ja parannukset)
+**Mitä pyysin:**
+Haluan listan parannuksista olemassa olevaan ohjelmaan.
+
+**Mitä sain:**
+- input-validointi
+- selkeämmät virheilmoitukset
+- estetään id-ylikirjoitus
+- parempi id-generointi
+- Konkreettiset koodimuutokset tiedostoihin (`validation.ts`, `reservationRepo.ts`, `reservationService.ts`, `app.ts`)
+
+**Miten hyödynsin sitä:**
+Tein muutokset yksi kerrallaan ja tein commitin jokaisen vaiheen jälkeen.
+
+## Prompt 4 (Smoke test)
+**Mitä pyysin:**
+Haluan valmiin skriptin, jolla voin testata API:n perustoiminnallisuudet helposti ilman että kopioin pitkiä PowerShell-pätkiä README:stä. Lisäksi haluan npm-skriptin, jotta testin voi ajaa yhdellä komennolla.
+
+**Mitä sain:**
+- `scripts/smoke.ps1`, joka testaa:
+  - varauksen luonti (POST)
+  - listaus (GET)
+  - päällekkäisyyden esto (POST -> odotettu 409)
+  - poisto (DELETE)
+  - toistuva poisto (DELETE -> odotettu 404)
+- Ohje lisätä `npm run smoke` package.jsoniin.
+
+**Miten hyödynsin sitä:**
+Lisäsin smoke-testin projektiin ja voin ajaa sen yhdellä komennolla (`npm run smoke`) serverin ollessa käynnissä. Tämä nopeuttaa toiminnallisuuksien tarkistamista ja tekee testauksesta toistettavaa.
