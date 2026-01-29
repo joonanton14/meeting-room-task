@@ -66,3 +66,20 @@ Haluan valmiin skriptin, jolla voin testata API:n perustoiminnallisuudet helpost
 
 **Miten hyödynsin sitä:**
 Lisäsin smoke-testin projektiin ja voin ajaa sen yhdellä komennolla (`npm run smoke`) serverin ollessa käynnissä. Tämä nopeuttaa toiminnallisuuksien tarkistamista ja tekee testauksesta toistettavaa.
+
+## Prompt 5 (Vitest + Supertest testit AAA-mallilla)
+**Mitä pyysin:**
+Haluan tehdä automaattiset testit TypeScript-projektiin käyttäen Vitestiä ja Supertestiä.
+Testien pitää olla ajettavissa erillään toisistaan.
+
+Haluan testata samat asiat mitkä käydään läpi smoke testeissä.
+
+**Mitä sain:**
+- Ohjeet asentaa riippuvuudet: vitest + supertest (+ @types/supertest)
+- package.jsoniin testiskriptit: `npm test` ja `npm run test:run`
+- Valmis API-integraatiotestitiedosto `test/reservations.api.test.ts`
+- Ohje lisätä repositoryyn `clearAll()`-metodi (`store.clear()`), jotta in-memory data voidaan nollata `beforeEach`-hookissa ja testit pysyvät riippumattomina.
+
+**Miten hyödynsin sitä:**
+Lisäsin repositoryyn `clearAll()`-metodin ja käytin sitä testien `beforeEach`-kohdassa, jotta jokainen testi alkaa tyhjästä tilasta.
+Lisäsin Vitest/Supertest -testit, jotka varmistavat API:n keskeiset toiminnallisuudet ja virhetilanteet (400/409/404) ilman manuaalista PowerShell-testailua.
