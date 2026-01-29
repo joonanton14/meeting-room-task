@@ -24,5 +24,9 @@ export const reservationRepo = {
     return Array.from(store.values())
       .filter((r) => r.roomId === roomId)
       .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
-  }
+  },
+  // Testejä varten: in-memory store tyhjennys testien välillä
+  clearAll() {
+    store.clear();
+},
 };
